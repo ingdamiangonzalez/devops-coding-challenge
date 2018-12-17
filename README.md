@@ -43,9 +43,10 @@ Then run `/bin/bash run.sh` again and after a minute you will see your new docke
 ### Healthcheck
 
 In order to run healthcheck you have healthcheck.sh script. You can use it to check your app.
-This script use mailgun to send emails when the web application is not running. You need to configure API DOMAIN and EMAIL environment variables. The first two variables configure mailgun sender and the last one is the email to receive the email when something is wrong.
+This script use mailgun to send emails when the web application is not running. You need to configure API, DOMAIN and EMAIL environment variables. The first two variables configure mailgun sender and the last one is the email to receive the email when something is wrong.
+APP_DNS is load balancer dns name (http://name).
 
-Run: `/bin/bash healthcheck.sh DOMAIN`
+Run: `/bin/bash healthcheck.sh APP_DNS`
 
 
 ## IAM credentials
