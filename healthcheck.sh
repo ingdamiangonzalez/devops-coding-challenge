@@ -28,10 +28,10 @@ LOG="SERVICE ${SERVER} DOWN"
 HTM="<html><body><b>STATUS ${SERVER} $(date +"%Y-%m-%d %H:%M:%S")</b><pre>${LOG}</pre></body></html>"
 
 # Send mail
-echo "${HTM}" | curl -s --insecure --user 'api:12232a1f5c172fac0aba9d77aaf3bb7d-b3780ee5-20b3d922' \
-  https://api.mailgun.net/v3/sandbox1f2472d4094c404693dcc9573141ac40.mailgun.org/messages \
+echo "${HTM}" | curl -s --insecure --user $API \
+  $DOMAIN \
   -F from='No Reply <noreply@mg.dgonzalez.com>' \
-  -F to='Damian <ing.damian.gonzalez@gmail.com>' \
+  -F to="Damian <$EMAIL>" \
   -F subject="SERVICE ${SERVER} DOWN" \
   -F html="<-"
   fi

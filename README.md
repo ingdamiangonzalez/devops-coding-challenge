@@ -1,73 +1,62 @@
 DevOps Coding Test
 ==================
 
-# Goal
+## Overview
 
-Script the creation of a service, and a health check script to verify it is up and responding correctly.
+This repository will create a dockerized web application and will put it online in a ECS cluster. The repository will create all the infrastructure and the ECR repository to store the docker images. You will be capable to change the source code and create a new version off the app.
 
-# Prerequisites
+### Infrastructure:
 
-You will need an AWS account. Create one if you don't own one already. You can use free-tier resources for this test.
+- VPC with tree subnets all in different availability zones to have redundancy. Also we have security groups and IAM roles
 
-# The Task
+- ECS Cluster with ECR repository to store all the images we create. Also we have a launch configuration and autoscalling group.
 
-You are required to provision and deploy a new service in AWS. It must:
 
-* Be publicly accessible.
-* Run a web server, it can be an out of the box webserver (ie: Nginx, Apache) or any application acting as one.
-* Deploy the content. This can be as simple as some static text representing a version number, for example:
-3.0.1
-or as complex as a full website. You choose. We will not provide the content.
 
-# Mandatory Work
 
-Fork this repository.
 
-* Script your service using your configuration management and/or infrastructure-as-code tool of choice.
-* Provision the service in your AWS account.
-* Write a health check script that can be run externally to periodically check that the service is up 
-* Alter the README to contain instructions required to:
-  * Provision the service.
-  * Run the health check script.
-* Provide us IAM credentials to log in to the AWS account. If you have other resources in it make sure we can only access what is related to this test.
-  * Document each step.
-  * Make it easy to install
-  * Make it as Cloud provider agnostic as you can - i.e. can we repeat this in Azure or Google Cloud Platform
-Once done, give us access to your fork. Feel free to ask questions as you go if anything is unclear, confusing, or just plain missing.
 
-# Extra Credit
+## Pre-requisites
 
-We know time is precious, we won't mark you down for not doing the extra credits, but if you want to give them a go...
+In order to use this repository you will need some packages installed and configured in you laptop.
 
-* Run the service inside a Docker container.
-* Make it highly available.
-* We value Terraform and rely on it heavily. If you already know TF, we’d love to see you use it.
+**Install docker:** *https://docs.docker.com/install/linux/docker-ce/ubuntu/*
 
-# Questions
+**Install aws cli:** *https://docs.aws.amazon.com/cli/latest/userguide/install-linux.html*
 
-#### What scripting languages can I use?
+**Configure AWS:** `aws configure`
 
-Anyone you like. You’ll have to justify your decision. We use CloudFormation, Puppet and Python internally. Please pick something you're familiar with, as you'll need to be able to discuss it.
+**Install terraform:** *https://learn.hashicorp.com/terraform/getting-started/install*
 
-#### Will I have to pay for the AWS charges?
 
-No. You are expected to use free-tier resources only and not generate any charges. Please remember to delete your resources once the review process is over so you are not charged by AWS.
+## Building The Code
 
-#### What will you be grading me on?
+Ones you complete the pre requisites section you need to add your web app code into src folder (don´t remove healthcheck.html file). After that you can execute the run script in order to deploy your code.
 
-Scripting skills, security, elegance, understanding of the technologies you use, documentation.
+`/bin/sh run.sh`
 
-#### What will you not take into account?
+This command will build a web app docker image with src folder in /usr/share/nginx/html. After that will create all the infrastructure and finaly upload the docker image into ECR repository.
 
-Brevity. We know there are very simple ways of solving this exercise, but we need to see your skills. We will not be able to evaluate you if you provide five lines of code.
+You will see the load balancer domain name in the console. Copy this domain name past it in your favorite browser and that´s all. Web app up and running.
 
-#### Will I have a chance to explain my choices?
+In order to update your web app you can change something in the src code and then go to terraform.tfvars and update app_version variable (i.e 1 for 2).
 
-If we proceed to a technical interview, we’ll be asking questions about why you made the choices you made. Comments in the code are also very helpful.
+Then run `/bin/bash run.sh` again and after a minute you will see your new dockerized app up and running.
 
-#### Why doesn't the test include X?
 
-Good question. Feel free to tell us how to make the test better. Or, you know, fork it and improve it!
+### Healthcheck
 
-#### How long should this take?
-There are many ways to solve this problem so it may vary for each candidate and depends how far you want to take it but we are confident the basic requirements can be met with 2-3 hours work.
+In order to run healthcheck you have healthcheck.sh script. You can use it to check your app.
+
+Run: `/bin/bash healthcheck.sh $DOMAIN`.
+
+This script use mailgun to send emails when the web application is not running. You need configure tree environment variables API and DOMAIN to configure mailgun and EMAIL to configure the receiver off the alarm.
+
+
+## IAM credentials
+
+**URL:** *https://284534076693.signin.aws.amazon.com/console*
+
+**user:** guest
+
+**pass:** p4sw0rd
