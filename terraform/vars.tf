@@ -1,7 +1,3 @@
-#variable "ecr_repository" {
-#  description = "ECR repository"
-#}
-
 ##
 ## App variables
 ##
@@ -68,12 +64,6 @@ variable "path_to_public_key" {
 ## AWS variables
 ##
 
-#variable "aws_access_key" {
-#  description = "access key"
-#}
-#variable "aws_secret_key" {#
-#  description = "secret key"
-#}
 variable "aws_region" {
   description = "aws region (us-east-1)"
   default = "us-east-1"

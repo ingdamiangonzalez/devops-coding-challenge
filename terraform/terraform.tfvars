@@ -16,7 +16,5 @@ app_version = "1"
 ## AWS variables
 ##
 
-#aws_access_key = "your access key"
-#aws_secret_key = "your secret key"
 #aws_region = "us-east-1"
 #ecs_instance_type = "t2.micro"

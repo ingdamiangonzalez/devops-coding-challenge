@@ -1,4 +1,5 @@
-# cluster
+# Create our cluster launch configuration and autoscaling group
+
 resource "aws_ecs_cluster" "example-cluster" {
     name = "example-cluster"
 }

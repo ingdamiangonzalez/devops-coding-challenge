@@ -1,5 +1,4 @@
 #!/bin/bash
-
 if [ "${1}" != "" ]; then
 
   SERVER="${1}";
@@ -8,7 +7,7 @@ if [ "${1}" != "" ]; then
 
   ACTION=""
 
-# Check status
+# Check status. When service is working STATUS will be ok
  if [ "${STATUS}" != "OK" ]; then
     sleep 10
     STATUS=`curl -s "${SERVER}/healthcheck.html"`
@@ -17,8 +16,7 @@ if [ "${1}" != "" ]; then
     fi
   fi
 
-# Verify action
-
+# Verify action. If STAUS != ok we trigger the action sendmail
   if [ "${ACTION}" == "sendmail" ]; then
 
 # Define log content

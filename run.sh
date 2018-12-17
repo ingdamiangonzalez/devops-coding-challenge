@@ -1,15 +1,18 @@
 #!/bin/bash
 # Create myapp docker image
+
 echo "Run docker build"
 docker build -t myapp .
 
 # Generate our infrastructure with terraform
+
 echo "Run terraform"
 cd terraform
 terraform init
 terraform apply -auto-approve
 
 # Push docker image to ecr repository
+
 echo "Push docker image to ecr repository"
 ZONE=`cat terraform.tfvars | grep aws_region | cut -d'"' -f 2`
 eval $( aws ecr get-login --no-include-email --region $ZONE )
