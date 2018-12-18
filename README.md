@@ -7,7 +7,7 @@ This repository will create a dockerized web application and will put it online 
 
 #### Infrastructure:
 
-- VPC with tree subnets all in different availability zones to have redundancy. Also we have security groups and IAM roles
+- VPC with three subnets all in different availability zones to have redundancy. Also we have security groups and IAM roles
 
 - ECS Cluster (4 ec2 instances by default) with ECR repository to store all the images we create. Also we have a launch configuration and autoscaling group.
 
