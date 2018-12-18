@@ -16,7 +16,7 @@
 
 - securitygroup.tf = Create security groups for elb and ecs.
 
-- terraform.tfvars = Variables file
+- terraform.tfvars = Variables file. With this file you can overwrite default variables to change configurations (app variables, ssh key files, aws variables.)
 
 - vars.tf = Variables definition
 
