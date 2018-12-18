@@ -23,8 +23,8 @@ In order to use this repository you will need some packages installed and config
 **Configure AWS:** `aws configure`
 
 #### Important!!! In order to test my solution with my aws account use my testing credentials for aws account. In production this credentials are variables and never will be in the repository.
-####aws_access_key_id = AKIAIDBGOFJ4NH6N3WOA
-####aws_secret_access_key = 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
+#### aws_access_key_id = AKIAIDBGOFJ4NH6N3WOA
+#### aws_secret_access_key = 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
 
 **Install terraform:** *https://learn.hashicorp.com/terraform/getting-started/install*
 
