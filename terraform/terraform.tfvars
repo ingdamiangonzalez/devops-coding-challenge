@@ -2,7 +2,7 @@
 ## App variables
 ##
 
-app_version = "1"
+app_version = "2"
 #app_quantity = "2"
 
 ##
