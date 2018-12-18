@@ -63,7 +63,6 @@ variable "path_to_public_key" {
 ##
 ## AWS variables
 ##
-
 variable "aws_region" {
   description = "aws region (us-east-1)"
   default = "us-east-1"
