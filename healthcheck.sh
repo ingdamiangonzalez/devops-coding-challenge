@@ -7,7 +7,7 @@ if [ "${1}" != "" ]; then
 
   ACTION=""
 
-# Check status. When service is working STATUS will be ok
+# Check status. When service is working STATUS will be OK
  if [ "${STATUS}" != "OK" ]; then
     sleep 10
     STATUS=`curl -s "${SERVER}/healthcheck.html"`

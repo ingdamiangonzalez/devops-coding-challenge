@@ -5,6 +5,7 @@ data "template_file" "myapp-task-definition-template" {
   vars {
    repository_url = "${replace("${aws_ecr_repository.myapp.repository_url}", "https://", "")}"
     app_version = "${var.app_version}"
+    aws_region = "${var.aws_region}"
   }
 }
 
@@ -15,12 +16,7 @@ data "aws_ecs_task_definition" "myapp-task-definition" {
 }
 ##########################################################################
 
-
-resource "aws_ecs_task_definition" "myapp-task-definition" {
-  family                = "myapp"
-  container_definitions = "${data.template_file.myapp-task-definition-template.rendered}"
-}
-
+# Load balancer for ECS
 resource "aws_elb" "myapp-elb" {
   name = "myapp"
   listener {
@@ -49,21 +45,30 @@ resource "aws_elb" "myapp-elb" {
   }
 }
 
+
+# Define task definition and logs with cloudwatch
+
+resource "aws_ecs_task_definition" "myapp-task-definition" {
+  family                = "myapp"
+  container_definitions = "${data.template_file.myapp-task-definition-template.rendered}"
+}
+
+resource "aws_cloudwatch_log_group" "myapp" {
+  name              = "myapp"
+  retention_in_days = 1
+}
+
+# Create ecs service
 resource "aws_ecs_service" "myapp-service" {
   name = "myapp"
   cluster = "${aws_ecs_cluster.example-cluster.id}"
-  #task_definition = "${aws_ecs_task_definition.myapp-task-definition.arn}"
   task_definition = "${aws_ecs_task_definition.myapp-task-definition.family}:${max("${aws_ecs_task_definition.myapp-task-definition.revision}", "${data.aws_ecs_task_definition.myapp-task-definition.revision}")}"
-  #task_definition = "${aws_ecs_task_definition.myapp-task-definition.family}:${aws_ecs_task_definition.myapp-task-definition.revision}"
   desired_count = "${var.app_quantity}"
   iam_role = "${aws_iam_role.ecs-service-role.arn}"
   depends_on = ["aws_iam_policy_attachment.ecs-service-attach1"]
-
-
   load_balancer {
     elb_name = "${aws_elb.myapp-elb.name}"
     container_name = "myapp"
     container_port = 80
   }
-  #lifecycle { ignore_changes = ["task_definition"] }
 }
